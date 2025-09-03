@@ -5,9 +5,12 @@ const API_BASE_URL = 'http://localhost:8080/api';
 class ApiService {
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`;
+    const token = localStorage.getItem('token');
+    
     const config: RequestInit = {
       headers: {
         'Content-Type': 'application/json',
+        ...(token && { 'Authorization': `Bearer ${token}` }),
         ...options.headers,
       },
       ...options,
@@ -17,11 +20,15 @@ class ApiService {
       const response = await fetch(url, config);
       
       if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          window.location.href = '/login';
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       if (response.status === 204) {
-        return null as T; // No content for DELETE operations
+        return null as T;
       }
       
       return await response.json();
@@ -158,6 +165,36 @@ class ApiService {
   async getCourseAverageMarks(courseId: number): Promise<number> {
     return this.request<number>(`/results/course/${courseId}/average`);
   }
+
+  // Student Portal API
+  async getAvailableCoursesForStudent(): Promise<Course[]> {
+    return this.request<Course[]>('/student/courses/available');
+  }
+
+  async getEnrolledCoursesForStudent(): Promise<Course[]> {
+    return this.request<Course[]>('/student/courses/enrolled');
+  }
+
+  async getStudentRegistrations(): Promise<Registration[]> {
+    return this.request<Registration[]>('/student/registrations');
+  }
+
+  async getStudentResults(): Promise<Result[]> {
+    return this.request<Result[]>('/student/results');
+  }
+
+  async enrollInCourse(courseId: number): Promise<Registration> {
+    return this.request<Registration>(`/student/courses/${courseId}/enroll`, {
+      method: 'POST'
+    });
+  }
+
+  async unenrollFromCourse(courseId: number): Promise<void> {
+    return this.request<void>(`/student/courses/${courseId}/unenroll`, {
+      method: 'POST'
+    });
+  }
 }
 
-export default new ApiService();
+const apiService = new ApiService();
+export default apiService;

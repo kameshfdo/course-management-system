@@ -17,6 +17,14 @@ INSERT IGNORE INTO students (id, student_id, first_name, last_name, email, phone
 (4, 'ST2022002', 'Alice', 'Brown', 'alice.brown@university.edu', '+1234567893', '2001-11-30', 'Computer Science', 2022, NOW(), NOW()),
 (5, 'ST2023001', 'Charlie', 'Davis', 'charlie.davis@university.edu', '+1234567894', '2003-01-17', 'English', 2023, NOW(), NOW());
 
+-- -- Insert sample users (password is 'password123' encrypted with BCrypt)
+-- INSERT IGNORE INTO users (id, username, password, email, role, student_id, enabled, created_at, updated_at) VALUES
+-- (1, 'admin', '$2a$10$N.1T3YaYwp1.BmE8T5uFLuWKYJwM3H6hcNLNBkNQc0nhFEvxoBXMG', 'admin@university.edu', 'ADMIN', NULL, true, NOW(), NOW()),
+-- (2, 'john.doe', '$2a$10$N.1T3YaYwp1.BmE8T5uFLuWKYJwM3H6hcNLNBkNQc0nhFEvxoBXMG', 'john.doe@university.edu', 'STUDENT', 1, true, NOW(), NOW()),
+-- (3, 'jane.smith', '$2a$10$N.1T3YaYwp1.BmE8T5uFLuWKYJwM3H6hcNLNBkNQc0nhFEvxoBXMG', 'jane.smith@university.edu', 'STUDENT', 2, true, NOW(), NOW()),
+-- (4, 'bob.johnson', '$2a$10$N.1T3YaYwp1.BmE8T5uFLuWKYJwM3H6hcNLNBkNQc0nhFEvxoBXMG', 'bob.johnson@university.edu', 'STUDENT', 3, true, NOW(), NOW()),
+-- (5, 'alice.brown', '$2a$10$N.1T3YaYwp1.BmE8T5uFLuWKYJwM3H6hcNLNBkNQc0nhFEvxoBXMG', 'alice.brown@university.edu', 'STUDENT', 4, true, NOW(), NOW());
+
 -- Insert sample registrations
 INSERT IGNORE INTO registrations (id, student_id, course_id, registration_date, status, remarks) VALUES
 (1, 1, 1, '2023-08-15 10:00:00', 'ENROLLED', 'Regular enrollment'),

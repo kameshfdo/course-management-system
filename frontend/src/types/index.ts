@@ -78,3 +78,39 @@ export interface SearchParams {
   sortBy?: string;
   sortDir?: string;
 }
+
+export interface AuthUser {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+  studentId?: number;
+}
+
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  username: string;
+  password: string;
+  email: string;
+  role: string;
+  studentId?: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  dateOfBirth?: string;
+  department?: string;
+  enrollmentYear?: number;
+}
+
+export interface AuthResponse {
+  token: string;
+  username: string;
+  email: string;
+  role: string;
+  userId: number;
+  studentId?: number;
+}
